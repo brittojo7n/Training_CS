@@ -95,18 +95,18 @@ namespace Training_CS
                         break;
 
                     case 4:
-                        while (true)
+                        while (isValid)
                         {
                             Console.WriteLine("\nExit the program? (yes/no): ");
                             string exit = Console.ReadLine().ToLower();
                             switch (exit)
                             {
                                 case "yes":
-                                    System.Environment.Exit(0);
+                                    isValid = false;
                                     break;
 
                                 case "y":
-                                    System.Environment.Exit(0);
+                                    isValid = false;
                                     break;
 
                                 case "no":
@@ -119,7 +119,7 @@ namespace Training_CS
 
                                 default:
                                     Console.WriteLine("\nInvalid Input!");
-                                    break;
+                                    continue;
                             }
                             break;
                         }
