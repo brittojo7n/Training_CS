@@ -1,133 +1,196 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Training_CS
 {
+    class AccountDetails
+    {
+        public string Pin { get; set; }
+        public string Name { get; set; }
+        public decimal Balance { get; set; }
+        public List<string> TransactionHistory { get; set; }
+        public HashSet<string> LoginLocations { get; set; }
+
+        public AccountDetails()
+        {
+            TransactionHistory = new List<string>();
+            LoginLocations = new HashSet<string>();
+        }
+    }
+
     internal class BankingSystem
     {
+        static Random random = new Random();
+
         public void Start()
         {
+            var accounts = new Dictionary<string, AccountDetails>
+            {
+                { "1001", new AccountDetails { Pin = "9452", Name = "Dave", Balance = 2.00M } },
+                { "1002", new AccountDetails { Pin = "1111", Name = "Sam", Balance = 5.00M } },
+                { "1003", new AccountDetails { Pin = "2000", Name = "Frank", Balance = 10.00M } }
+            };
+
+            string[] cities = { "New York", "Los Angeles", "Chicago", "Houston", "Phoenix" };
             decimal accountBalance = 0.00M;
-            string message, accountNum, accountPin, accountName;
-            string[] account = { "1001", "1002", "1003" };
-            string[] pin = { "9452", "1111", "2000" };
-            string[] name = { "Dave", "Sam", "Frank" };
-            decimal[] balance = { 2.00M, 5.00M, 10.00M };
+            int citiesRandom;
+            string message, accountNum, accountPin, accountName, exitPrompt;
             bool isValid = false;
-            bool isAccount = false;
+            bool isExit = false;
             accountName = "";
 
-            do
+            while (!isExit)
             {
-                Console.WriteLine("\nEnter the Account Number: ");
-                accountNum = Console.ReadLine();
-
-                for (int i = 0; i < account.Length; i++)
+                do
                 {
-                    if (account[i] == accountNum)
+                    Console.WriteLine("\nEnter the Account Number: ");
+                    accountNum = Console.ReadLine();
+
+                    if (accounts.TryGetValue(accountNum, out AccountDetails details))
                     {
-                        isAccount = true;
                         Console.WriteLine("\nEnter the PIN: ");
                         accountPin = Console.ReadLine();
-                        if (pin[i] == accountPin)
+                        if (details.Pin == accountPin)
                         {
-                            accountName = name[i];
-                            accountBalance = balance[i];
+                            citiesRandom = random.Next(cities.Length);
+                            details.LoginLocations.Add(cities[citiesRandom]);
+                            accountName = details.Name;
+                            accountBalance = details.Balance;
                             isValid = true;
-                            break;
-                        }
-                    }
-                }
-                if (!isValid && isAccount)
-                {
-                    Console.WriteLine("\nWrong Password!");
-                }
-                else if (!isAccount)
-                {
-                    Console.WriteLine("\nAccount doesn't exist!");
-                }
-            } while (!isValid);
-
-            while (isValid)
-            {
-                Console.WriteLine("\n\n1. Check Account Balance\n2. Add/Remove funds\n3. Account Details\n4. Exit\n\nEnter a choice:");
-                int choice;
-                string userInput = Console.ReadLine();
-
-                if (!int.TryParse(userInput, out choice)) Console.WriteLine("Invalid input! Please enter a number.");
-
-                switch (choice)
-                {
-                    case 1:
-                        if (accountBalance > 0)
-                        {
-                            message = $"\nYour current balance is ${accountBalance}";
                         }
                         else
                         {
-                            message = $"\nYour current balance is ${accountBalance}. Try adding some funds.";
+                            Console.WriteLine("\nInvalid Account Number or PIN.");
                         }
-                        Console.WriteLine(message);
-                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("\nInvalid Account Number.");
+                    }
+                } while (!isValid);
 
-                    case 2:
-                        do
-                        {
+                while (isValid)
+                {
+                    string[] menuOptions = {
+                    "Check Account Balance",
+                    "Add/Remove funds",
+                    "Account Details",
+                    "View Transaction History",
+                    "View Login Locations",
+                    "Logout"
+                };
+
+                    Console.WriteLine("\n--- Main Menu ---");
+                    for (int i = 0; i < menuOptions.Length; i++)
+                    {
+                        Console.WriteLine($"{i + 1}. {menuOptions[i]}");
+                    }
+                    Console.Write("\nEnter a choice: ");
+
+                    int choice;
+                    string userInput = Console.ReadLine();
+
+                    if (!int.TryParse(userInput, out choice))
+                    {
+                        Console.WriteLine("Invalid input! Please enter a number.");
+                        continue;
+                    }
+
+                    switch (choice)
+                    {
+                        case 1:
+                            message = $"\nYour current balance is ${accountBalance}";
+                            Console.WriteLine(message);
+                            break;
+
+                        case 2:
                             Console.WriteLine("\nEnter funds to add to your account (negative values to remove): ");
-                            decimal funds = decimal.Parse(Console.ReadLine());
-                            if (accountBalance + funds < 0)
+                            if (decimal.TryParse(Console.ReadLine(), out decimal funds) && funds != 0)
                             {
-                                message = "\nInsufficient funds! Cannot remove more than current balance.";
+                                string transactionRecord;
+                                if (accountBalance + funds < 0)
+                                {
+                                    message = "\nInsufficient funds! Cannot remove more than current balance.";
+                                    transactionRecord = $"Failed withdrawal attempt of ${-funds}";
+                                }
+                                else
+                                {
+                                    accountBalance += funds;
+                                    accounts[accountNum].Balance = accountBalance;
+
+                                    if (funds > 0)
+                                    {
+                                        transactionRecord = $"Deposited: ${funds} on {DateTime.Now:dd/MM/yyyy}";
+                                    }
+                                    else
+                                    {
+                                        transactionRecord = $"Withdrew: ${-funds} on {DateTime.Now:dd/MM/yyyy}";
+                                    }
+                                    message = $"\nTransaction complete. Your new balance is ${accountBalance}";
+                                }
+                                accounts[accountNum].TransactionHistory.Add(transactionRecord);
+                                Console.WriteLine(message);
                             }
                             else
                             {
-                                accountBalance += funds;
-                                message = $"\n${funds} have been added.\nYour new balance is ${accountBalance}";
-                            }
-
-                            Console.WriteLine(message);
-                            Console.WriteLine("\nContinue adding? \nType anything other than \"y\" or \"yes\" to go back...");
-                            userInput = Console.ReadLine();
-                        } while (userInput.ToLower() == "yes" || userInput.ToLower() == "y");
-                        break;
-
-                    case 3:
-                        Console.WriteLine($"\nAccount Number: {accountNum}\nAccount Name: {accountName}\nAccount Balance: ${accountBalance}");
-                        break;
-
-                    case 4:
-                        while (isValid)
-                        {
-                            Console.WriteLine("\nExit the program? (yes/no): ");
-                            string exit = Console.ReadLine().ToLower();
-                            switch (exit)
-                            {
-                                case "yes":
-                                    isValid = false;
-                                    break;
-
-                                case "y":
-                                    isValid = false;
-                                    break;
-
-                                case "no":
-                                    Console.WriteLine("\nConitnuing...");
-                                    break;
-
-                                case "n":
-                                    Console.WriteLine("\nConitnuing...");
-                                    break;
-
-                                default:
-                                    Console.WriteLine("\nInvalid Input!");
-                                    continue;
+                                Console.WriteLine("Invalid amount entered.");
                             }
                             break;
-                        }
-                        break;
 
-                    default:
-                        Console.WriteLine("\nInvalid choice.");
-                        break;
+                        case 3:
+                            Console.WriteLine($"\nAccount Number: {accountNum}\nAccount Name: {accountName}\nAccount Balance: ${accountBalance}");
+                            break;
+
+                        case 4:
+                            Console.WriteLine("\n--- Transaction History ---");
+                            List<string> history = accounts[accountNum].TransactionHistory;
+                            if (history.Count == 0)
+                            {
+                                Console.WriteLine("No transactions have been made yet.");
+                            }
+                            else
+                            {
+                                foreach (var record in history)
+                                {
+                                    Console.WriteLine(record);
+                                }
+                            }
+                            break;
+
+                        case 5:
+                            Console.WriteLine("\n--- Unique Login Locations ---");
+                            HashSet<string> locations = accounts[accountNum].LoginLocations;
+                            foreach (var location in locations)
+                            {
+                                Console.WriteLine($"- {location}");
+                            }
+                            break;
+
+                        case 6:
+                            Console.WriteLine("\n Do you want to Log out? (y/n)");
+                            exitPrompt = Console.ReadLine();
+                            if (exitPrompt.ToLower() == "y" || exitPrompt.ToLower() == "yes") isValid = false;
+                            break;
+
+                        default:
+                            Console.WriteLine("\nInvalid choice.");
+                            break;
+                    }
+                }
+                
+                if (!isValid)
+                {
+                    Console.WriteLine("\nExit? (y/n): ");
+                    exitPrompt = Console.ReadLine();
+                    if (exitPrompt.ToLower() == "y" || exitPrompt.ToLower() == "yes")
+                    {
+                        isExit = true;
+                        Console.WriteLine("\nThank you for using the Banking System. Goodbye!");
+                    }
+                    else
+                    {
+                        Console.WriteLine("\n\n-- Login Menu --");
+                    }
                 }
             }
         }
