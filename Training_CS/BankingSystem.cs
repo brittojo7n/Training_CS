@@ -18,7 +18,7 @@ namespace Training_CS
         }
     }
 
-    internal class BankingSystem
+    public class BankingSystem
     {
         static Random random = new Random();
 
