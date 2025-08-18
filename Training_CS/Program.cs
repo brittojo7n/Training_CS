@@ -6,8 +6,10 @@ namespace Training_CS
     {
         public static void Main(string[] args)
         {
-            Factorial ft = new Factorial();
-            Console.WriteLine($"Factorial: {ft.Fact(5)}");
+            Dispatcher dispatch = new Dispatcher();
+            dispatch.Vehicle("Truck");
+            dispatch.Vehicle("Truck", "Sully Morgan");
+            dispatch.Vehicle("Truck", 42);
         }
     }
 }

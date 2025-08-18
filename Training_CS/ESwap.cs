@@ -1,6 +1,7 @@
-﻿namespace Training_CS
+﻿using System;
+
+namespace Training_CS
 {
-    using System;
 
     public class ESwap
     {
