@@ -43,13 +43,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Factorial.cs" />
-    <Compile Include="Dispatcher.cs" />
-    <Compile Include="Override.cs" />
+    <Compile Include="Classes\Car.cs" />
+    <Compile Include="Classes\Factorial.cs" />
+    <Compile Include="Classes\Dispatcher.cs" />
+    <Compile Include="Classes\Override.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="BankingSystem.cs" />
-    <Compile Include="ESwap.cs" />
+    <Compile Include="Classes\BankingSystem.cs" />
+    <Compile Include="Classes\ESwap.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
