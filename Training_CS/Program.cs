@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Xml.Serialization;
 
 namespace Training_CS
 {
@@ -13,6 +14,8 @@ namespace Training_CS
             Override ovride = new Override();
             BankingSystem bank = new BankingSystem();
             Car myCar = new Car("Toyota", "Supra", 2020);
+            Smartphone myPhone = new Smartphone("Samsung Galaxy S24 Ultra", 20);
+            Laptop myLaptop = new Laptop("ASUS TUF GAMING A15", 50);
 
             string[] menu = {
                 "1. Dispatcher",
@@ -21,7 +24,8 @@ namespace Training_CS
                 "4. Override",
                 "5. Banking System",
                 "6. Car Concept",
-                "7. Exit"
+                "7. Plymorphism and Abstraction",
+                "8. Exit"
             };
             do
             {
@@ -57,7 +61,7 @@ namespace Training_CS
                             Console.WriteLine("\nInvalid input! Please enter a number.");
                             continue;
                         }
-                        fact.Fact(num);
+                        Console.WriteLine(fact.Fact(num));
                         break;
                     case 4:
                         ovride.Start();
@@ -73,6 +77,46 @@ namespace Training_CS
                         myCar.DisplayStatus();
                         break;
                     case 7:
+                        do
+                        {
+                            Console.WriteLine("\n1. Get Status of Phone\n2. Get Status of Laptop\n3. Charge device\n4. Back\nChoose an option:");
+                            userInput = Console.ReadLine();
+                            if (!int.TryParse(userInput, out int subChoice))
+                            {
+                                Console.WriteLine("\nInvalid input! Please enter a number.");
+                                continue;
+                            }
+                            switch (subChoice)
+                            {
+                                case 1:
+                                    myPhone.TurnOn();
+                                    Console.WriteLine(myPhone.GetStatus());
+                                    break;
+                                case 2:
+                                    myLaptop.TurnOn();
+                                    Console.WriteLine(myLaptop.GetStatus());
+                                    break;
+                                case 3:
+                                    IChargeable chargePhone = myPhone;
+                                    IChargeable chargeLaptop = myLaptop;
+                                    if(chargePhone.BatteryLevel < 100)
+                                        chargePhone.Charge();
+                                    if (chargeLaptop.BatteryLevel < 100)
+                                        chargeLaptop.Charge();
+                                    Console.WriteLine($"\n{myPhone.GetStatus()}");
+                                    Console.WriteLine(myLaptop.GetStatus());
+                                    break;
+                                case 4:
+                                    isAlive = false;
+                                    break;
+                                default:
+                                    Console.WriteLine("\nInvalid choice! Please select a valid option.");
+                                    break;
+                            }
+                        } while (isAlive);
+                        isAlive = true;
+                        break;
+                    case 8:
                         isAlive = false;
                         Console.WriteLine("\n\nExiting...");
                         break;
