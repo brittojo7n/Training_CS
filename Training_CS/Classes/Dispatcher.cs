@@ -5,19 +5,31 @@ namespace Training_CS
 
     public class Dispatcher
     {
-        public void Vehicle(string vehicleType)
+        public string VehicleType { get; set; }
+        public int Route { get; set; }
+        public string Driver { get; set; }
+
+        public Dispatcher(string vehicleType, int route, string driver)
         {
-            Console.WriteLine($"Dispatching a {vehicleType}.");
+            this.VehicleType = vehicleType;
+            this.Route = route;
+            this.Driver = driver;
+        }
+        public void Vehicle()
+        {
+            Console.WriteLine($"Dispatching a {VehicleType} with driver {Driver} on Route {Route}.");
         }
 
-        public void Vehicle(string vehicleType, string driver)
+        public void Vehicle(string driver)
         {
-            Console.WriteLine($"Dispatching a {vehicleType} with driver {driver}.");
+            this.Driver = driver;
+            Console.WriteLine($"Updated:\t Dispatching a {VehicleType} with driver {Driver}.");
         }
 
-        public void Vehicle(string vehicleType, int routeNumber)
+        public void Vehicle(int route)
         {
-            Console.WriteLine($"Dispatching a {vehicleType} on route #{routeNumber}.");
+            this.Route = route;
+            Console.WriteLine($"Updated:\t Dispatching a {VehicleType} on Route {Route}.");
         }
     }
 }

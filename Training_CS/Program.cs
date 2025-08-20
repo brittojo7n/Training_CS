@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Xml.Serialization;
 
 namespace Training_CS
 {
@@ -8,7 +7,7 @@ namespace Training_CS
         public static void Main(string[] args)
         {
             bool isAlive = true;
-            Dispatcher dispatch = new Dispatcher();
+            Dispatcher dispatch = new Dispatcher("Scania", 44, "Vlad Rascalov");
             ESwap swap = new ESwap();
             Factorial fact = new Factorial();
             Override ovride = new Override();
@@ -23,8 +22,8 @@ namespace Training_CS
                 "3. Factorial",
                 "4. Override",
                 "5. Banking System",
-                "6. Car Concept",
-                "7. Plymorphism and Abstraction",
+                "6. Cars",
+                "7. Devices",
                 "8. Exit"
             };
             do
@@ -45,9 +44,10 @@ namespace Training_CS
                 switch (choice)
                 {
                     case 1:
-                        dispatch.Vehicle("Truck");
-                        dispatch.Vehicle("Truck", "Sully Morgan");
-                        dispatch.Vehicle("Truck", 42);
+                        dispatch.Vehicle();
+                        dispatch.Vehicle("Dimitri Rascalov");
+                        dispatch.Vehicle(28);
+                        dispatch.Vehicle();
                         break;
                     case 2: 
                         swap.Start();
