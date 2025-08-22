@@ -1,6 +1,7 @@
 ﻿using iTextSharp.text;
 using iTextSharp.text.pdf;
 using iTextSharp.text.pdf.draw;
+using System;
 using System.IO;
 
 namespace Training_CS.Classes
@@ -143,6 +144,7 @@ namespace Training_CS.Classes
                 signatureTable.AddCell(dateCell);
 
                 document.Add(signatureTable);
+                Console.WriteLine($"PDF generated successfully at: {filePath}");
             }
             catch (DocumentException de)
             {
