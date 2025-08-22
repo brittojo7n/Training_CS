@@ -134,13 +134,11 @@ namespace Training_CS.Classes
 
                 PdfPCell signatureCell = new PdfPCell(new Phrase("Applicant Signature:\n\n\n___________________", baseFont));
                 signatureCell.Border = PdfPCell.NO_BORDER;
-                signatureCell.Padding = 10;
                 signatureTable.AddCell(signatureCell);
 
                 PdfPCell dateCell = new PdfPCell(new Phrase("Date: ___________________", baseFont));
                 dateCell.Border = PdfPCell.NO_BORDER;
                 dateCell.HorizontalAlignment = Element.ALIGN_RIGHT;
-                dateCell.Padding = 10;
                 signatureTable.AddCell(dateCell);
 
                 document.Add(signatureTable);
