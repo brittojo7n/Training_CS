@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Training_CS
+namespace Training_CS.Classes
 {
     public class Power
     {

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using Training_CS.Classes;
 
 namespace Training_CS
 {
@@ -7,7 +9,7 @@ namespace Training_CS
         public static void Main(string[] args)
         {
             bool isAlive = true;
-            Dispatcher dispatch = new Dispatcher("Scania", 44, "Vlad Rascalov");
+            Dispatcher dispatch = new Dispatcher("Scania", 44, "Vladimir Glebov");
             ESwap swap = new ESwap();
             Factorial fact = new Factorial();
             Override ovride = new Override();
@@ -15,6 +17,7 @@ namespace Training_CS
             Car myCar = new Car("Toyota", "Supra", 2020);
             Smartphone myPhone = new Smartphone("Samsung Galaxy S24 Ultra", 20);
             Laptop myLaptop = new Laptop("ASUS TUF GAMING A15", 50);
+            PdfGen pdf = new PdfGen();
 
             string[] menu = {
                 "1. Dispatcher",
@@ -24,7 +27,8 @@ namespace Training_CS
                 "5. Banking System",
                 "6. Cars",
                 "7. Devices",
-                "8. Exit"
+                "8. PDF Generation",
+                "9. Exit"
             };
             do
             {
@@ -117,6 +121,9 @@ namespace Training_CS
                         isAlive = true;
                         break;
                     case 8:
+                        pdf.Generate($"{Directory.GetCurrentDirectory()}\\JobAppForm.pdf");
+                        break;
+                    case 9:
                         isAlive = false;
                         Console.WriteLine("\n\nExiting...");
                         break;

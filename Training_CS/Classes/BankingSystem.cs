@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Training_CS
+namespace Training_CS.Classes
 {
     class AccountDetails
     {

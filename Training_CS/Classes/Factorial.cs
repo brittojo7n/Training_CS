@@ -1,4 +1,4 @@
-﻿namespace Training_CS
+﻿namespace Training_CS.Classes
 {
     public class Factorial
     {
