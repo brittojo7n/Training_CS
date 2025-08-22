@@ -158,7 +158,7 @@ namespace Training_CS.Classes
             }
         }
 
-        private void AddPersonalField(PdfPTable table, string label)
+        void AddPersonalField(PdfPTable table, string label)
         {
             Font labelFont = FontFactory.GetFont("Arial", 12, Font.BOLD);
             Font valueFont = FontFactory.GetFont("Arial", 12, Font.NORMAL);
@@ -174,7 +174,7 @@ namespace Training_CS.Classes
             table.AddCell(valueCell);
         }
 
-        private void AddTableHeader(PdfPTable table, string text, Font font)
+        void AddTableHeader(PdfPTable table, string text, Font font)
         {
             PdfPCell cell = new PdfPCell(new Phrase(text, font));
             cell.BackgroundColor = BaseColor.LIGHT_GRAY;
@@ -183,14 +183,14 @@ namespace Training_CS.Classes
             table.AddCell(cell);
         }
 
-        private void AddEmptyCell(PdfPTable table)
+        void AddEmptyCell(PdfPTable table)
         {
             PdfPCell cell = new PdfPCell(new Phrase(" "));
             cell.Padding = 8;
             table.AddCell(cell);
         }
 
-        private Paragraph CreateLabelAndLine(string labelText)
+        Paragraph CreateLabelAndLine(string labelText)
         {
             Font labelFont = FontFactory.GetFont("Arial", 12, Font.BOLD);
             var paragraph = new Paragraph();
